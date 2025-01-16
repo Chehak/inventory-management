@@ -24,6 +24,7 @@ const NavBar = () => {
           className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 p-2 shadow">
           <li><a>Item 1</a></li>
           <li><a>Item 3</a></li>
+          <li><a>Manage Types</a></li>
         </ul>
       </div>
       <a className="btn btn-ghost text-xl">Objector</a>
@@ -32,6 +33,7 @@ const NavBar = () => {
       <ul className="menu menu-horizontal px-1">
         <li><a>Item 1</a></li>
         <li><a>Item 3</a></li>
+        <li><a>Manage Types</a></li>
       </ul>
     </div>
    
