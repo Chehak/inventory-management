@@ -1,13 +1,18 @@
 import React from "react";
-import formData from "../utils/types.json";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const types = useSelector((state) => state.fields).types
   const handleTypeClick = (typeId) => {
     navigate("/type/" + typeId);
   };
 
+  const objectTypeList = types.map((type) => ({
+    typeId: type.typeId,
+    objectType: type.data.staticFields.find((field) => field.name === "Object Type")?.value || "",
+  }));
   return (
     <div className="navbar bg-neutral">
       <div className="">
@@ -32,9 +37,9 @@ const NavBar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 p-2 shadow"
           >
-            {formData.map((item) => (
+            {objectTypeList.map((item) => (
               <li key={item.typeId}>
-                <a>{item.typeName}</a>
+                <a>{item.objectType}</a>
               </li>
             ))}
             <li>
@@ -46,11 +51,13 @@ const NavBar = () => {
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          {formData.map((item) => (
-            <li key={item.typeId} onClick={() => handleTypeClick(item.typeId)}>
-              <a>{item.typeName}</a>
-            </li>
-          ))}
+          {objectTypeList
+            .filter((item) => item.objectType) 
+            .map((item) => (
+              <li key={item.typeId} onClick={() => handleTypeClick(item.typeId)}>
+                <a>{item.objectType}</a>
+              </li>
+            ))}
           <li>
             <Link to="/types">Manage Types</Link>
           </li>

@@ -1,34 +1,84 @@
 import React, { useState } from "react";
-import formStructure from "../utils/types.json";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addItemToType, updateItemValue } from "../utils/fieldsSlice";
 
 const Type = () => {
   const params = useParams();
-  const [formData, setFormData] = useState(formStructure);
+  const dispatch = useDispatch();
+  const types = useSelector((store) => store.fields).types;
 
-  // Filter the data based on the typeId
-  const filteredData = formData.find(
+  const filteredData = types.find(
     (type) => type.typeId === Number(params.typeId)
   );
+
+  const handleAddItem = (typeId) => {
+    const uniqueItemId = `item-${Math.floor(Math.random() * 10000)}`;
+    dispatch(addItemToType({
+      typeId,
+      item: { itemId: uniqueItemId },
+    }));
+  }
+
+  const handleItemValueChange = (itemId, fieldName, newValue) => {
+    dispatch(updateItemValue({ itemId, fieldName, value: newValue, typeId: params.typeId }));
+  };
+
+  if (!filteredData) return (
+    <div>No id found</div>
+  )
   return (
-    <>
-      {filteredData.data.map((formField) => (
-        <div className="card bg-base-100 shadow-xl p-4 flex flex-row items-center lg:w-96 w-full">
-          <div className="card-body flex-grow">
-            <h1 className="card-title text-lg font-semibold">
-              {formField.objectType.name}
-            </h1>
-            <p className="text-sm text-gray-600">
-              {formField.objectType.value} ({formField.objectType.type})
-            </p>
-            <div className="card-actions mt-2 flex justify-end">
-              <button className="btn btn-primary btn-sm">Edit</button>
-              <button className="btn btn-secondary btn-sm">Delete</button>
-            </div>
-          </div>
-        </div>
-      ))}
-    </>
+    <div className="p-4">
+      <button className="btn mb-2" onClick={() => { handleAddItem(params.typeId) }}>Add Item</button>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" >
+
+        {
+          Array.isArray(filteredData.items) && filteredData.items.length > 0 ?
+            (
+              filteredData.items.map((item) => (
+                <div className="card bg-neutral w-96 shadow-lg mr-5" key={item.itemId}>
+                  <div className="card-body p-3">
+                    <div className="flex spa">
+                    <h5 className="card-title text-[18px]">{filteredData.data.staticFields[0].value}</h5>
+                    <button class="btn btn-square">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-6 w-6"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor">
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M6 18L18 6M6 6l12 12" />
+  </svg>
+</button>
+                      </div>
+                    {filteredData.data.dynamicFields.map((field, index) => (
+                      <div key={index} >
+                        <label>{field.name}</label>
+                        <input
+                        className="input input-sm input-bordered w-full max-w-xs"
+                          type={field.type || "text"}
+                          value={item[field.name] || ""}
+                          onChange={(e) =>
+                            handleItemValueChange(item.itemId, field.name, e.target.value)
+                          }
+                          
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))
+            ) :
+            (
+              <div>NO ITEMS FOUND</div>
+            )}
+
+      </div>
+    </div>
   );
 };
 

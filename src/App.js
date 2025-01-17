@@ -13,8 +13,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Body />}>
-              <Route path="/type/:typeId" element={<Type />} />
               <Route path="/types" element={<ManageTypes />} />
+              <Route path="/type/:typeId" element={<Type />} />
             </Route>
           </Routes>
         </BrowserRouter>
