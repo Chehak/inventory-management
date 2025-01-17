@@ -46,6 +46,75 @@
             ]
         }
       ]
+    },
+      {
+      "typeId": 2,
+      "typeName": "Accelrator",
+      "data": [
+        {
+            "id": 1,
+            "objectType":{
+                "name": "Modal",
+                    "value": "Blue Max (14')",
+                    "type": "text"
+            },
+    
+            "fields": [
+                {
+                    "name": "Modal",
+                    "value": "Blue Max (14')",
+                    "type": "text"
+                },
+                {
+                    "name": "Type",
+                    "value": "Electric",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "objectType":{
+                "name": "Modal",
+                    "value": "Blue Max (14')",
+                    "type": "text"
+            },
+    
+            "fields": [
+                {
+                    "name": "Modal",
+                    "value": "Blue Max (14')",
+                    "type": "text"
+                },
+                {
+                    "name": "Type",
+                    "value": "Electric",
+                    "type": "text"
+                }
+            ]
+        },
+         {
+            "id": 1,
+            "objectType":{
+                "name": "Modal",
+                    "value": "Blue Max (14')",
+                    "type": "text"
+            },
+    
+            "fields": [
+                {
+                    "name": "Modal",
+                    "value": "Blue Max (14')",
+                    "type": "text"
+                },
+                {
+                    "name": "Type",
+                    "value": "Electric",
+                    "type": "text"
+                }
+            ]
+        }
+      ]
     }
   
   ]
